@@ -47,7 +47,7 @@ export default {
     // WebSocket
     initializeWebSocket() {
         const shapeStore = useShapeStore();
-        const ws = new WebSocket('ws://127.0.0.1:8000/ws/get_shapes');
+        const ws = new WebSocket('ws://127.0.0.1:8000/ws/get_shapes/');
 
         ws.onopen = () => {
             ws.send('get_shapes');

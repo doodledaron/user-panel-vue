@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { formatTimestamp, extractFileName } from '../utils.js'
+import Shape from "../model/shape.js";
 
 export const useShapeStore = defineStore('shapes', {
     state: () => ({
@@ -8,19 +9,10 @@ export const useShapeStore = defineStore('shapes', {
     }),
     actions: {
         setShapes(shapes) {
-            this.shapes = shapes.map(shape => ({
-                timestamp: formatTimestamp(shape.timestamp),
-                name: shape.name,
-                image: extractFileName(shape.image)
-            }))
+            this.shapes = shapes.map(shape => (Shape.create(shape.timestamp, shape.name, shape.image)))
         },
         addShape(shape) {
-            const mappedShape = {
-                timestamp: formatTimestamp(shape.timestamp),
-                name: shape.name,
-                image: shape.image
-            }
-            this.shapes.unshift(mappedShape)
+            this.shapes.unshift(Shape.create(shape.timestamp, shape.name, shape.image))
         },
         removeShape(shape) {
             this.shapes = this.shapes.filter(
@@ -31,12 +23,7 @@ export const useShapeStore = defineStore('shapes', {
             const index = this.shapes.findIndex(
                 s => s.timestamp === formatTimestamp(shape.timestamp)
             )
-            const mappedShape = {
-                timestamp: formatTimestamp(shape.timestamp),
-                name: shape.name,
-                image: shape.image
-            }
-            this.shapes[index] = mappedShape
+            this.shapes[index] = Shape.create(shape.timestamp, shape.name, shape.image)
         },
         setShowData(value) {
             this.showData = value
