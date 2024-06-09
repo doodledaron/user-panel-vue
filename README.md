@@ -30,28 +30,32 @@ npm run dev
 src
 ├── App.vue
 ├── assets
-│   └── style.css
+│   └── vue.svg
 ├── auth
 │   ├── LogIn.vue
 │   └── SignUp.vue
 ├── components
-│   ├── AddShapeForm.vue
-│   ├── BaseInput.vue
-│   ├── DeleteDialogContent.vue
-│   ├── Dialog.vue
-│   ├── EditShapeForm.vue
-│   ├── ListItem.vue
 │   ├── NavigationBar.vue
-│   └── SearchAndAddButtonRow.vue
+│   └── ShapeTable.vue
 ├── main.js
 ├── services.js
 ├── store
-│   └── authStore.js
+│   ├── authStore.js
+│   └── shapeStore.js
+├── style.css
 ├── utils.js
-└── views
-    ├── SignUpOrLogin.vue
-    └── View.vue
+└── view
+    ├── MainView.vue
+    └── SignUpOrLogin.vue
+
 ```
+
+## Features
+
+###Simple Ui to show shapes
+A grid to show timestamp, name, and color shape
+
+
 
 
 
