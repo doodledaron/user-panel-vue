@@ -25,6 +25,7 @@ npm run dev
 ```
 
 ## Project Setup
+```
 src
 ├── App.vue
 ├── assets
@@ -49,7 +50,7 @@ src
 └── views
     ├── SignUpOrLogin.vue
     └── View.vue
-
+```
 
 
 
