@@ -47,7 +47,7 @@ src
 
 ## Features
 
-###Simple Ui to show shapes
+### Simple Ui to show shapes
 A grid to show timestamp, name, and color shape
 
 
