@@ -50,6 +50,11 @@ src
 ### Simple Ui to show shapes
 A grid to show timestamp, name, and color shape
 
+> [!TIP]
+> If theres problem signing up user, can temporarily use
+> username: cars, password: carstesting
+
+
 
 
 
