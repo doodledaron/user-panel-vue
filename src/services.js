@@ -23,9 +23,24 @@ apiClient.interceptors.request.use(config => {
 });
 
 export default {
-    getShapes() {
-        return apiClient.get("/");
+    getShapes(callback ,interval = 3000) {
+        // return apiClient.get("/");
+        const fetchShapes = () => {
+            apiClient.get("/").then(
+                (response) => {
+                    //return the values in callback
+                    console.log(response.data)
+                    callback(response.data);
+                },
+                (error) => {
+                    console.error('Error fetching shapes:', error);
+                }
+            )
+        }
+
+        const pollingId = setInterval(fetchShapes, interval)
     },
+
 
     // Sign up user
     signUpUser(formData) {
@@ -45,37 +60,37 @@ export default {
     },
 
     // WebSocket
-    initializeWebSocket() {
-        const shapeStore = useShapeStore();
-        const ws = new WebSocket('ws://20.2.198.214:8000/ws/get_shapes/');
+    // initializeWebSocket() {
+    //     const shapeStore = useShapeStore();
+    //     const ws = new WebSocket('ws://20.2.198.214:8000/ws/get_shapes/');
 
-        ws.onopen = () => {
-            ws.send('get_shapes');
-            console.log('WebSocket connection established');
-        };
+    //     ws.onopen = () => {
+    //         ws.send('get_shapes');
+    //         console.log('WebSocket connection established');
+    //     };
 
-        ws.onmessage = (event) => {
-            const res = JSON.parse(event.data);
-            if (res.shape.shape_create) {
-                shapeStore.addShape(res.shape.shape_create);
-            } else if (res.shape.shape_delete) {
-                shapeStore.removeShape(res.shape.shape_delete);
-            } else if (res.shape.shape_update) {
-                shapeStore.updateShape(res.shape.shape_update);
-            }
-        };
+    //     ws.onmessage = (event) => {
+    //         const res = JSON.parse(event.data);
+    //         if (res.shape.shape_create) {
+    //             shapeStore.addShape(res.shape.shape_create);
+    //         } else if (res.shape.shape_delete) {
+    //             shapeStore.removeShape(res.shape.shape_delete);
+    //         } else if (res.shape.shape_update) {
+    //             shapeStore.updateShape(res.shape.shape_update);
+    //         }
+    //     };
 
-        ws.onclose = () => {
-            console.log('WebSocket connection closed');
-            shapeStore.setShowData(false);
-        };
+    //     ws.onclose = () => {
+    //         console.log('WebSocket connection closed');
+    //         shapeStore.setShowData(false);
+    //     };
 
-        ws.onerror = (error) => {
-            console.log(`WebSocket error: ${error}`);
-            shapeStore.setShowData(false);
-        };
+    //     ws.onerror = (error) => {
+    //         console.log(`WebSocket error: ${error}`);
+    //         shapeStore.setShowData(false);
+    //     };
 
-        // Return WebSocket instance to allow manual closing if needed
-        return ws;
-    },
+    //     // Return WebSocket instance to allow manual closing if needed
+    //     return ws;
+    // },
 };

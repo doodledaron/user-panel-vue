@@ -12,7 +12,9 @@
 					<td>{{ shape.timestamp }}</td>
 					<td>{{ shape.name }}</td>
 					<td>
-						<v-img class="py-8" :src="`https://shapy-images.sgp1.digitaloceanspaces.com/shapes/${shape.image}`" alt="shape image">
+						<v-img class="py-8"
+							:src="`https://shapy-images.sgp1.digitaloceanspaces.com/shapes/${shape.image}`"
+							alt="shape image">
 						</v-img>
 					</td>
 				</tr>
@@ -32,26 +34,24 @@ import { useShapeStore } from "../store/shapeStore";
 const showData = ref(true)
 
 const shapeStore = useShapeStore();
-let ws
 
-onMounted(() => {
-	shapeService.getShapes().then(
-		res => {
-			shapeStore.setShapes(res.data)
-		}
-		
-	).catch(err => {
-		shapeStore.setShowData(false)
-		console.log(err)
-	})
-	ws = shapeService.initializeWebSocket()
-})
+
+const pollingId = shapeService.getShapes(
+	shapes => {
+		shapeStore.setShapes(shapes)
+	}, 3000
+)
 
 onBeforeUnmount(() => {
-	if (ws) {
-		ws.close()
-	}
+	clearInterval(pollingId)
 });
+
+//closing ws
+// onBeforeUnmount(() => {
+// 	if (ws) {
+// 		ws.close()
+// 	}
+// });
 
 
 </script>
