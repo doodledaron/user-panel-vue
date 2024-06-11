@@ -3,7 +3,7 @@ import { useAuthStore } from './store/authStore.js';
 
 
 const apiClient = axios.create({
-    baseURL: "http://20.2.198.214:8000/user/",
+    baseURL: "https://20.2.198.214:8000/user/",
     withCredentials: false,
     headers: {
         Accept: "application/json",
