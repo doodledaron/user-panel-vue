@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
-import { formatTimestamp, extractFileName } from '../utils.js'
+import { formatTimestamp, } from '../utils.js'
 import Shape from "../model/shape.js";
+import shapeService from "../services.js"
 
 export const useShapeStore = defineStore('shapes', {
     state: () => ({
         shapes: [],
-        showData: true
+        showData: true,
+        pollingId: null,
     }),
     actions: {
         setShapes(shapes) {
@@ -27,6 +29,23 @@ export const useShapeStore = defineStore('shapes', {
         },
         setShowData(value) {
             this.showData = value
-        }
+        },
+        //start ajax request
+        startPolling() {
+            if (!this.pollingId) {
+                this.pollingId = setInterval(() => {
+                    shapeService.getShapes(shapes => {
+                        this.setShapes(shapes);
+                    }, 3000);
+                }, 3000);
+            }
+        },
+        //stop ajax request
+        stopPolling() {
+
+            clearInterval(this.pollingId);
+            this.pollingId = null;
+
+        },
     }
 })

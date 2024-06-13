@@ -9,11 +9,14 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '../store/authStore.js';
+import { useShapeStore } from '../store/shapeStore';
 
 const router = useRouter();
 const authStore = useAuthStore();
+const shapeStore = useShapeStore();
 const handleLogOut = () => {
     authStore.removeToken();
+    shapeStore.stopPolling();
     router.push('/');
 }
 </script>

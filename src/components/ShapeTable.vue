@@ -28,23 +28,22 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import shapeService from '../services.js'
+import { ref, onBeforeUnmount, onMounted } from 'vue';
 import { useShapeStore } from "../store/shapeStore";
 const showData = ref(true)
 
 const shapeStore = useShapeStore();
 
 
-const pollingId = shapeService.getShapes(
-	shapes => {
-		shapeStore.setShapes(shapes)
-	}, 3000
+onMounted(() => {
+	shapeStore.startPolling();
+}
 )
 
 onBeforeUnmount(() => {
-	clearInterval(pollingId)
-});
+	shapeStore.stopPolling();
+}
+)
 
 //closing ws
 // onBeforeUnmount(() => {
